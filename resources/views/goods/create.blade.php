@@ -27,9 +27,33 @@
                 <input class="form-control" type="file" id="input-image" name="image"/>
                 <span id="input-image-error" class="text-danger d-none"><strong>Alert</strong> text.</span>
             </div>
+                <div class="form-group text-white-50">
+                    <label for="input-categories-id">Category</label>
+                    <select class="form-control" id="input-categories-id" name="categories_id">
+                        <option selected disabled>Categories</option>
+                        @if(isset($categories))
+                            @foreach($categories as $key=>$category)
+                                <option value="{{$key}}">{{$category}}</option>
+                            @endforeach
+                        @endif
+                    </select>
+                    <span id="input-categories-id-error" class="text-danger d-none"><strong>Alert</strong> text.</span>
+                </div>
+                <div class="form-group text-white-50">
+                    <label for="input-brand-id">Brand</label>
+                    <select class="form-control" id="input-brand-id" name="brand_id">
+                        <option selected disabled>Brands</option>
+                        @if(isset($brand))
+                            @foreach($brand as $key=>$b)
+                                <option value="{{$key}}">{{$b}}</option>
+                            @endforeach
+                        @endif
+                    </select>
+                    <span id="input-categories-id-error" class="text-danger d-none"><strong>Alert</strong> text.</span>
+                </div>
             <div class="form-group text-white-50">
                 <label for="input-quantity">Quantity</label>
-                <input class="form-control" type="number" id="input-quantity" name="qunatity"/>
+                <input class="form-control" type="number" id="input-quantity" name="quantity"/>
                 <span id="input-quantity-error" class="text-danger d-none"><strong>Alert</strong> text.</span>
             </div>
                 <div class="form-group text-white-50">

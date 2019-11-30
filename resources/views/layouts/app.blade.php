@@ -19,7 +19,7 @@
 <div>
     <div class="header-dark">
         @include('partials.nav')
-        @include('partials.breadcrumbs',['data'=>array(['name'=>'Home','route'=>'/'],['name'=>'Library','route'=>'/'],['name'=>'Goods','route'=>'/'])])
+{{--        @include('partials.breadcrumbs',['data'=>array(['name'=>'Home','route'=>'/'],['name'=>'Library','route'=>'/'],['name'=>'Goods','route'=>'/'])])--}}
 
         <div class="container hero bg-dark text-white" style="min-height: 400px">
             <div class="row">

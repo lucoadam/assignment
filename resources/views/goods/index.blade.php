@@ -3,7 +3,7 @@
 @section('content')
     <h1 class="text-center">Goods</h1>
     <div class="d-flex justify-content-end">
-        @can('create-user')
+        @canany(['registered','admin'])
         <div class="h-100">
            <a href="{{route('goods.create')}}" title="Add Goods">
                <span class="navbar-text"><i class="fa fa-plus-circle"></i></span>
@@ -38,10 +38,11 @@
                 <td>{{__($good->quantity)}}</td>
                 <td><img width="200" height="100" src="{{__($good->image)}}"/></td>
                 <td>
-                    @can('delete-user')
+                    @canany(['registered','admin'])
                         <form id="delete-form-{{$good->id}}" method="post" action="{{route('goods.destroy',$good)}}">
                             @method('delete')
                             {{csrf_field()}}
+                            <a href="{{route('goods.edit',$good)}}"><span class="navbar-text"><i class="fa fa-edit"></i></span></a>
                             <span  onclick="document.getElementById('delete-form-{{$good->id}}').submit()" class="navbar-text"><i class="fa fa-trash"></i></span>
                         </form>
                     @endcan

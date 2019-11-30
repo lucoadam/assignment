@@ -3,7 +3,7 @@
 @section('content')
     <h1 class="text-center">Brands</h1>
     <div class="d-flex justify-content-end">
-        @can('create-user')
+        @canany(['registered','admin'])
         <div class="h-100">
            <a href="{{route('brand.create')}}" title="Add Brand">
                <span class="navbar-text"><i class="fa fa-plus-circle"></i></span>
@@ -22,7 +22,9 @@
             <tr>
                 <th>Id</th>
                 <th>Brand</th>
-                <th>Brand</th>
+                @can('admin')
+                <th>Action</th>
+                    @endcan
             </tr>
             </thead>
             <tbody>
@@ -31,16 +33,18 @@
             <tr>
                 <td>{{__($brand->id)}}</td>
                 <td>{{__($brand->name)}}</td>
+                @can('admin')
                 <td>
-                    @can('delete-user')
+
                         <form id="delete-form-{{$brand->id}}" method="post" action="{{route('brand.destroy',$brand)}}">
                             @method('delete')
                             {{csrf_field()}}
                             <a href="{{route('brand.edit',$brand)}}"><span  class="navbar-text"><i class="fa fa-edit"></i></span></a>
                             <span  onclick="document.getElementById('delete-form-{{$brand->id}}').submit()" class="navbar-text"><i class="fa fa-trash"></i></span>
                         </form>
-                    @endcan
+
                 </td>
+                @endcan
 
             </tr>
                 @endforeach

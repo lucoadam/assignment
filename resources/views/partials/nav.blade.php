@@ -4,7 +4,9 @@
              id="navcol-1">
             @auth
                 <ul class="nav navbar-nav">
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="#">Link</a></li>
+                    @can('admin')
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="{{route('user.index')}}">User Management</a></li>
+                    @endcan
                     <li class="nav-item dropdown">
                         <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#">General </a>
                         <div class="dropdown-menu" role="menu">
@@ -29,7 +31,7 @@
             @endauth
 
         </div>
-            @if(auth()->check())
+            @auth
                 <ul class="nav navbar-nav pull-right">
 
                     <li class="nav-item dropdown">
@@ -53,7 +55,7 @@
             <span class="navbar-text ml-4"><a class="login" href="{{url('/')}}/login">Log In</a></span>
             <a class="btn btn-light action-button" role="button" href="{{url('/')}}/register">Sign Up</a>
                 </div>
-            @endif
+            @endauth
 
     </div>
 </nav>

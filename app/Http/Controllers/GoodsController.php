@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Brand;
+use App\Category;
 use App\Good;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class GoodsController extends Controller
 {
@@ -15,7 +19,7 @@ class GoodsController extends Controller
     public function index(Good $good)
     {
         //
-        return view('goods.index')->with('goods',$good->paginate(10));
+        return view('goods.index')->with('goods',auth()->user()->goods()->paginate(10));
     }
 
     /**
@@ -23,10 +27,12 @@ class GoodsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Category $category,Brand $brand)
     {
         //
-        return view('goods.create');
+        $categories=$category->all()->pluck('name','id')->toArray();
+        $brand=$brand->all()->pluck('name','id')->toArray();
+        return view('goods.create',compact('categories'),compact('brand'));
     }
 
     /**
@@ -38,6 +44,21 @@ class GoodsController extends Controller
     public function store(Request $request)
     {
         //
+        $input = $request->all();
+        if(isset($input['image'])){
+            $img = $input['image'];
+            $input['image']='';
+            $filepath ='/Image/'.implode('', explode(' ', $img->getClientOriginalName()));
+            $path = public_path('Image');
+            $filename= implode('', explode(' ', $img->getClientOriginalName()));
+            $img->move($path,$filename);
+            $input['image']=$filepath;
+        }else{
+            $input['image']='';
+        }
+        //dd($input);
+        auth()->user()->goods()->create($input);
+        return redirect(route('goods.index'));
     }
 
     /**
@@ -57,9 +78,12 @@ class GoodsController extends Controller
      * @param  \App\Good  $good
      * @return \Illuminate\Http\Response
      */
-    public function edit(Good $good)
+    public function edit(Good $good,Category $category,Brand $brand)
     {
         //
+        $categories=$category->all()->pluck('name','id')->toArray();
+        $brand=$brand->all()->pluck('name','id')->toArray();
+        return view('goods.edit',compact('categories'),compact('brand'))->with('good',$good);
     }
 
     /**
@@ -72,6 +96,19 @@ class GoodsController extends Controller
     public function update(Request $request, Good $good)
     {
         //
+        $input = $request->all();
+        if(isset($input['image'])){
+            $img = $input['image'];
+            $input['image']='';
+            $filepath ='/Image/'.implode('', explode(' ', $img->getClientOriginalName()));
+            $path = public_path('Image');
+            $filename= implode('', explode(' ', $img->getClientOriginalName()));
+            $img->move($path,$filename);
+            $input['image']=$filepath;
+        }
+        //dd($input);
+        $good->update($input);
+        return redirect(route('goods.index'));
     }
 
     /**
@@ -83,5 +120,10 @@ class GoodsController extends Controller
     public function destroy(Good $good)
     {
         //
+        if(isset($good->image)){
+            File::delete(public_path().'/'.$good->image);
+        }
+        $good->delete();
+        return redirect(route('goods.index'));
     }
 }

@@ -38,7 +38,7 @@
                 <span id="input-password-error" class="text-danger d-none"><strong>Alert</strong> text.</span>
             </div>
             <div class="form-group text-white-50">
-                <label for="input-password-confirmation">Password</label>
+                <label for="input-password-confirmation">Confirm Password</label>
                 <input class="form-control" type="password" id="input-password-confirmation" name="password_confirmation"/>
                 <span id="input-password-confirmation-error" class="text-danger d-none"><strong>Alert</strong> text.</span>
             </div>
